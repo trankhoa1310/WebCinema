@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cinema</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css"
+	th:href="@{/css/style.css}">
+<link rel="stylesheet" href="/css/owl.carousel.min.css"
+	th:href="@{/css/owl.carousel.min.css}" />
+<link rel="stylesheet" href="/css/owl.theme.default.min.css"
+	th:href="@{/css/owl.theme.default.min.css}" />
+</head>
+<body>
+	<!-- Header -->
+	<header class="filmoja-header-area">
+		<nav class="navbar navbar-default" style="margin-bottom: 0px">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target="#myNavbar">
+						<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" th:href="@{/home}">CINEMA</a>
+				</div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav">
+						<li><a th:href="@{/home}">Trang Chủ</a></li>
+						<li class="active"><a th:href="@{/schedule}">Lịch Chiếu</a></li>
+						<li><a href="#" data-toggle="dropdown">Phim</a>
+							<ul class="dropdown-menu">
+								<li><a href="currentMovie">Phim Đang Chiếu</a></li>
+								<li><a href="upcomingMovie">Phim Sắp Chiếu</a></li>
+							</ul></li>
+						<li><a th:href="@{/billUser}">Lịch sử mua vé</a></li>
+					</ul>
+
+					<ul
+						style="display: flex; justify-content: center; align-items: center;"
+						class="nav navbar-nav navbar-right">
+						<li>
+							<!-- <a href="" data-toggle="modal" data-target="#signUpModal"
+                  ><span class="glyphicon glyphicon-user"></span> Sign Up</a
+                > --> <a sec:authorize="isAnonymous()"
+							th:href="@{/register}"><span class="glyphicon glyphicon-user"></span>
+								Sign Up</a>
+						</li>
+
+						<li><a sec:authorize="isAnonymous()" th:href="@{/login}"><span
+								class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+						<!-- <li><span th:text ="${#authentication.getPrincipal().getId()}"></span></li> -->
+						<li sec:authorize="isAuthenticated()"><span
+							class="glyphicon glyphicon-user" sec:authentication="name"></span>
+						</li>
+
+
+						<li><a sec:authorize="isAuthenticated()" th:href="@{/logout}"><span
+								class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+	<!-- content -->
+	<section class="filmoja-movie-list-area section_30 container bg-main"
+		style="min-height: 600px; background: #e6e7e9; max-width: 100% !important">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="browse-option-box">
+						<h3>CINEMA ĐÀ NẴNG</h3>
+						<p>0935329487</p>
+						<p>TRUNG TÂM GIẢI TRÍ CINEMA ĐÀ NẴNG TẦNG 2 Tòa nhà trọ, Thổ
+							Sơn 2, Phường Hòa Hải, Quận Ngủ Hành Sơn, Đà Nẵng</p>
+					</div>
+					<div
+						class="tabs movies ui-tabs ui-corner-all ui-widget ui-widget-content">
+						<div class="tv-panel-list">
+							<div class="tv-tab">
+								<ul class="nav nav-tabs nav-pills tv-tab-switch schedule-list">
+									<li th:each="s : ${currentDate}" class="nav-item active"><a
+										data-toggle="tab" href="#one">
+											<p
+												style="width: 100%; text-align: center; padding: 0 15px; color: #f37737; font-weight: 600;"
+												th:text="${s}"></p>
+									</a></li>
+									<li th:each="s : ${currentDate1}" class="nav-item"><a
+										data-toggle="tab" href="#two">
+											<p
+												style="width: 100%; text-align: center; padding: 0 15px; color: #f37737; font-weight: 600;"
+												th:text="${s}"></p>
+									</a></li>
+									<li th:each="s : ${currentDate2}" class="nav-item"><a
+										data-toggle="tab" href="#three">
+											<p
+												style="width: 100%; text-align: center; padding: 0 15px; color: #f37737; font-weight: 600;"
+												th:text="${s}"></p>
+									</a></li>
+									<li th:each="s : ${currentDate3}" class="nav-item"><a
+										data-toggle="tab" href="#four">
+											<p
+												style="width: 100%; text-align: center; padding: 0 15px; color: #f37737; font-weight: 600;"
+												th:text="${s}"></p>
+									</a></li>
+									<li th:each="s : ${currentDate4}" class="nav-item"><a
+										data-toggle="tab" href="#five">
+											<p
+												style="width: 100%; text-align: center; padding: 0 15px; color: #f37737; font-weight: 600;"
+												th:text="${s}"></p>
+									</a></li>
+									<li th:each="s : ${currentDate5}" class="nav-item"><a
+										data-toggle="tab" href="#six">
+											<p
+												style="width: 100%; text-align: center; padding: 0 15px; color: #f37737; font-weight: 600;"
+												th:text="${s}"></p>
+									</a></li>
+									<li th:each="s : ${currentDate6}" class="nav-item"><a
+										data-toggle="tab" href="#seven">
+											<p
+												style="width: 100%; text-align: center; padding: 0 15px; color: #f37737; font-weight: 600;"
+												th:text="${s}"></p>
+									</a></li>
+
+								</ul>
+							</div>
+							<div class="tab-content">
+								<!-- Monday -->
+								<div id="one" class="tab-pane fade active in">
+									<div class="tab-movies movie-list-box">
+										<div>
+											<div class="single-movie-list " th:each="mv : ${listMovie}">
+												<div
+													class="single-movie-list-left col-lg-3 col-md-4 col-sm-12">
+													<a th:href="@{/movieDetail?id={id}(id=${mv.id})}"> <img th:src="@{${mv.imageURl}}" />
+
+
+													</a>
+												</div>
+												<div
+													class="single-movie-list-right col-lg-9 col-md-8 col-sm-12">
+													<h3>
+														<a th:href="@{/movieDetail?id={id}(id=${mv.id})}" th:text="${mv.name}"></a>
+													</h3>
+													<p class="list-genre" th:text="${mv.categories}"></p>
+													<div class="movie-list-info">
+														<p>
+															Đạo diễn: <span th:text="${mv.director}"></span>
+														</p>
+														<p>
+															Diễn viên: <span th:text="${mv.actors}"></span>
+														</p>
+														<br /> <span th:text="${mv.content}"></span>
+													</div>
+													<div class="col-md-12 col-sm-12" style="display: flex; margin-top: 40px">
+														<hr />
+														<div th:each="sch : ${schedules}" th:if="${sch.getMovies().getId() == mv.id}">
+															<a th:unless="${sch.showTime.isAfter(time)}"
+															
+															><span class="time item"
+															style="opacity: .3;background-color: #2b2b31"
+															th:text="${sch.showTime}"></span></a>
+															<a th:if="${sch.showTime.isAfter(time)}"
+															th:href="@{/bookingTicket?movieId={movieId}&roomId={roomId}&showDate={showDate}&showTime={showTime} (movieId=${sch.movies.id},roomId=${sch.rooms.id},showDate=${sch.showDate},showTime=${sch.showTime})}"
+															><span class="time item"
+															
+															th:text="${sch.showTime}"></span></a>
+														</div>
+														
+													</div>
+												</div>
+												<div class="clear"></div>
+											</div>
+
+											<div class="clear"></div>
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="clear"></div>
+								</div>
+
+								<!-- Monday -->
+								<div id="two" class="tab-pane fade ">
+									<div class="tab-movies movie-list-box">
+										<div>
+											<div class="single-movie-list " th:each="mv : ${listMovie1}">
+												<div
+													class="single-movie-list-left col-lg-3 col-md-4 col-sm-12">
+													<a> <img th:src="@{${mv.imageURl}}" />
+
+
+													</a>
+												</div>
+												<div
+													class="single-movie-list-right col-lg-9 col-md-8 col-sm-12">
+													<h3>
+														<a th:text="${mv.name}"></a>
+													</h3>
+													<p class="list-genre" th:text="${mv.categories}"></p>
+													<div class="movie-list-info">
+														<p>
+															Đạo diễn: <span th:text="${mv.director}"></span>
+														</p>
+														<p>
+															Diễn viên: <span th:text="${mv.actors}"></span>
+														</p>
+														<br /> <span th:text="${mv.content}"></span>
+													</div>
+													<div class="col-md-12 col-sm-12">
+														<hr />
+														<a
+															th:href="@{/bookingTicket?movieId={movieId}&roomId={roomId}&showDate={showDate}&showTime={showTime} (movieId=${sch.movies.id},roomId=${sch.rooms.id},showDate=${sch.showDate},showTime=${sch.showTime})}"
+															th:each="sch : ${schedules1}"><span class="time item"
+															th:if="${sch.getMovies().getId() == mv.id}"
+															th:text="${sch.showTime}"></span></a>
+													</div>
+												</div>
+												<div class="clear"></div>
+											</div>
+											<div class="clear"></div>
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="clear"></div>
+								</div>
+								<!-- Monday -->
+
+								<!-- Monday -->
+								<div id="three" class="tab-pane fade ">
+									<div class="tab-movies movie-list-box">
+										<div>
+											<div class="single-movie-list " th:each="mv : ${listMovie2}">
+												<div
+													class="single-movie-list-left col-lg-3 col-md-4 col-sm-12">
+													<a> <img th:src="@{${mv.imageURl}}" />
+
+
+													</a>
+												</div>
+												<div
+													class="single-movie-list-right col-lg-9 col-md-8 col-sm-12">
+													<h3>
+														<a th:text="${mv.name}"></a>
+													</h3>
+													<p class="list-genre" th:text="${mv.categories}"></p>
+													<div class="movie-list-info">
+														<p>
+															Đạo diễn: <span th:text="${mv.director}"></span>
+														</p>
+														<p>
+															Diễn viên: <span th:text="${mv.actors}"></span>
+														</p>
+														<br /> <span th:text="${mv.content}"></span>
+													</div>
+													<div class="col-md-12 col-sm-12">
+														<hr />
+														<a
+															th:href="@{/bookingTicket?movieId={movieId}&roomId={roomId}&showDate={showDate}&showTime={showTime} (movieId=${sch.movies.id},roomId=${sch.rooms.id},showDate=${sch.showDate},showTime=${sch.showTime})}"
+															th:each="sch : ${schedules2}"><span class="time item"
+															th:if="${sch.getMovies().getId() == mv.id}"
+															th:text="${sch.showTime}"></span></a>
+													</div>
+												</div>
+												<div class="clear"></div>
+											</div>
+											<div class="clear"></div>
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="clear"></div>
+								</div>
+								<!-- Monday -->
+
+								<!-- Monday -->
+								<div id="four" class="tab-pane fade ">
+									<div class="tab-movies movie-list-box">
+										<div>
+											<div class="single-movie-list " th:each="mv : ${listMovie3}">
+												<div
+													class="single-movie-list-left col-lg-3 col-md-4 col-sm-12">
+													<a> <img th:src="@{${mv.imageURl}}" />
+
+
+													</a>
+												</div>
+												<div
+													class="single-movie-list-right col-lg-9 col-md-8 col-sm-12">
+													<h3>
+														<a th:text="${mv.name}"></a>
+													</h3>
+													<p class="list-genre" th:text="${mv.categories}"></p>
+													<div class="movie-list-info">
+														<p>
+															Đạo diễn: <span th:text="${mv.director}"></span>
+														</p>
+														<p>
+															Diễn viên: <span th:text="${mv.actors}"></span>
+														</p>
+														<br /> <span th:text="${mv.content}"></span>
+													</div>
+													<div class="col-md-12 col-sm-12">
+														<hr />
+														<a
+															th:href="@{/bookingTicket?movieId={movieId}&roomId={roomId}&showDate={showDate}&showTime={showTime} (movieId=${sch.movies.id},roomId=${sch.rooms.id},showDate=${sch.showDate},showTime=${sch.showTime})}"
+															th:each="sch : ${schedules3}"><span class="time item"
+															th:if="${sch.getMovies().getId() == mv.id}"
+															th:text="${sch.showTime}"></span></a>
+													</div>
+												</div>
+												<div class="clear"></div>
+											</div>
+											<div class="clear"></div>
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="clear"></div>
+								</div>
+								<!-- Monday -->
+
+								<!-- Monday -->
+								<div id="five" class="tab-pane fade ">
+									<div class="tab-movies movie-list-box">
+										<div>
+											<div class="single-movie-list " th:each="mv : ${listMovie4}">
+												<div
+													class="single-movie-list-left col-lg-3 col-md-4 col-sm-12">
+													<a> <img th:src="@{${mv.imageURl}}" />
+
+
+													</a>
+												</div>
+												<div
+													class="single-movie-list-right col-lg-9 col-md-8 col-sm-12">
+													<h3>
+														<a th:text="${mv.name}"></a>
+													</h3>
+													<p class="list-genre" th:text="${mv.categories}"></p>
+													<div class="movie-list-info">
+														<p>
+															Đạo diễn: <span th:text="${mv.director}"></span>
+														</p>
+														<p>
+															Diễn viên: <span th:text="${mv.actors}"></span>
+														</p>
+														<br /> <span th:text="${mv.content}"></span>
+													</div>
+													<div class="col-md-12 col-sm-12">
+														<hr />
+														<a
+															th:href="@{/bookingTicket?movieId={movieId}&roomId={roomId}&showDate={showDate}&showTime={showTime} (movieId=${sch.movies.id},roomId=${sch.rooms.id},showDate=${sch.showDate},showTime=${sch.showTime})}"
+															th:each="sch : ${schedules4}"><span class="time item"
+															th:if="${sch.getMovies().getId() == mv.id}"
+															th:text="${sch.showTime}"></span></a>
+													</div>
+												</div>
+												<div class="clear"></div>
+											</div>
+											<div class="clear"></div>
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="clear"></div>
+								</div>
+								<!-- Monday -->
+
+								<!-- Monday -->
+								<div id="six" class="tab-pane fade ">
+									<div class="tab-movies movie-list-box">
+										<div>
+											<div class="single-movie-list " th:each="mv : ${listMovie5}">
+												<div
+													class="single-movie-list-left col-lg-3 col-md-4 col-sm-12">
+													<a> <img th:src="@{${mv.imageURl}}" />
+
+
+													</a>
+												</div>
+												<div
+													class="single-movie-list-right col-lg-9 col-md-8 col-sm-12">
+													<h3>
+														<a th:text="${mv.name}"></a>
+													</h3>
+													<p class="list-genre" th:text="${mv.categories}"></p>
+													<div class="movie-list-info">
+														<p>
+															Đạo diễn: <span th:text="${mv.director}"></span>
+														</p>
+														<p>
+															Diễn viên: <span th:text="${mv.actors}"></span>
+														</p>
+														<br /> <span th:text="${mv.content}"></span>
+													</div>
+													<div class="col-md-12 col-sm-12">
+														<hr />
+														<a
+															th:href="@{/bookingTicket?movieId={movieId}&roomId={roomId}&showDate={showDate}&showTime={showTime} (movieId=${sch.movies.id},roomId=${sch.rooms.id},showDate=${sch.showDate},showTime=${sch.showTime})}"
+															th:each="sch : ${schedules5}"><span class="time item"
+															th:if="${sch.getMovies().getId() == mv.id}"
+															th:text="${sch.showTime}"></span></a>
+													</div>
+												</div>
+												<div class="clear"></div>
+											</div>
+											<div class="clear"></div>
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="clear"></div>
+								</div>
+								<!-- Monday -->
+
+								<!-- Monday -->
+								<div id="seven" class="tab-pane fade ">
+									<div class="tab-movies movie-list-box">
+										<div>
+											<div class="single-movie-list " th:each="mv : ${listMovie6}">
+												<div
+													class="single-movie-list-left col-lg-3 col-md-4 col-sm-12">
+													<a> <img th:src="@{${mv.imageURl}}" />
+
+
+													</a>
+												</div>
+												<div
+													class="single-movie-list-right col-lg-9 col-md-8 col-sm-12">
+													<h3>
+														<a th:text="${mv.name}"></a>
+													</h3>
+													<p class="list-genre" th:text="${mv.categories}"></p>
+													<div class="movie-list-info">
+														<p>
+															Đạo diễn: <span th:text="${mv.director}"></span>
+														</p>
+														<p>
+															Diễn viên: <span th:text="${mv.actors}"></span>
+														</p>
+														<br /> <span th:text="${mv.content}"></span>
+													</div>
+													<div class="col-md-12 col-sm-12">
+														<hr />
+														<a
+															th:href="@{/bookingTicket?movieId={movieId}&roomId={roomId}&showDate={showDate}&showTime={showTime} (movieId=${sch.movies.id},roomId=${sch.rooms.id},showDate=${sch.showDate},showTime=${sch.showTime})}"
+															th:each="sch : ${schedules6}"><span class="time item"
+															th:if="${sch.getMovies().getId() == mv.id}"
+															th:text="${sch.showTime}"></span></a>
+													</div>
+												</div>
+												<div class="clear"></div>
+											</div>
+											<div class="clear"></div>
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="clear"></div>
+								</div>
+								<!-- Monday -->
+								<div class="clear"></div>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="clear"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="clear"></div>
+	</section>
+
+	<!-- jQuery library -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>

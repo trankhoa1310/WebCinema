@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cinema</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" type="text/css"  href="/css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" th:href="@{/css/owl.carousel.min.css}" />
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css"  th:href="@{/css/owl.theme.default.min.css}"/>
+  </head>
+  <body>
+   <!-- Header -->
+    <header class="filmoja-header-area">
+      <nav class="navbar navbar-default" style="margin-bottom: 0px">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button
+              type="button"
+              class="navbar-toggle"
+              data-toggle="collapse"
+              data-target="#myNavbar"
+            >
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" th:href="@{/home}">CINEMA</a>
+          </div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+						<li><a th:href="@{/home}">Trang Chủ</a></li>
+						<li><a th:href="@{/schedule}">Lịch Chiếu</a></li>
+						<li><a href="#" data-toggle="dropdown">Phim</a>
+							<ul class="dropdown-menu active">
+								<li class="active"><a href="currentMovie">Phim Đang Chiếu</a></li>
+								<li><a href="upcomingMovie">Phim Sắp Chiếu</a></li>
+							</ul></li>
+						<li ><a th:href="@{/billUser}">Lịch sử mua
+								vé</a></li>
+					</ul>
+          
+            <ul
+						style="display: flex; justify-content: center; align-items: center;"
+						class="nav navbar-nav navbar-right">
+						<li>
+							<!-- <a href="" data-toggle="modal" data-target="#signUpModal"
+                  ><span class="glyphicon glyphicon-user"></span> Sign Up</a
+                > --> <a sec:authorize="isAnonymous()"
+							th:href="@{/register}"><span class="glyphicon glyphicon-user"></span>
+								Sign Up</a>
+						</li>
+
+						<li><a sec:authorize="isAnonymous()" th:href="@{/login}"><span
+								class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+						<!-- <li><span th:text ="${#authentication.getPrincipal().getId()}"></span></li> -->
+						<li sec:authorize="isAuthenticated()"><span
+							class="glyphicon glyphicon-user" sec:authentication="name"></span>
+						</li>
+
+
+						<li><a sec:authorize="isAuthenticated()" th:href="@{/logout}"><span
+								class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+					</ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- Header -->
+
+    <!-- content -->
+    <section
+      class="filmoja-movie-list-area section_30 container bg-main"
+      style="min-height: 600px; background: #e6e7e9; max-width: 100% !important"
+    >
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="filmoja-heading">
+              <h2 style="color: black">Phim : <span>Đang Chiếu</span></h2>
+            </div>
+          </div>
+        </div>
+        <div class="movie-grid-box list-film">
+          <div class="amy-mv-grid layout3" style="text-align: center">
+          
+          
+            <div th:each="mv2 : ${currentMovie}"
+              class="col-lg-3 col-md-6 col-sm-12 grid-item"
+              style="float: left"
+            >
+              <article class="entry-item">
+                <div class="front">
+                  <div class="entry-thumb">
+                    <a th:href="@{/movieDetail?id={id}(id=${mv2.id})}" ><img src="@{${mv2.imageURl}}" th:src="@{${mv2.imageURl}}"/></a>
+                  </div>
+                  <a  th:href="@{/movieDetail?id={id}(id=${mv2.id})}">
+                    <h4 th:text="${mv2.name}" class="entry-title">
+                    </h4></a
+                  >
+                  <div class="entry-genres">
+                    <p th:text="${mv2.categories}" style="color: #f37737"></p>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <div class="clear"></div>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+    </section>
+    <!-- content -->
+ 
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </body>
+</html>

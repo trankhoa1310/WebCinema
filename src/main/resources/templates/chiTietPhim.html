@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chi Tiết Phim</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css"
+	th:href="@{/css/style.css}">
+<link rel="stylesheet" href="/css/owl.carousel.min.css"
+	th:href="@{/css/owl.carousel.min.css}" />
+<link rel="stylesheet" href="/css/owl.theme.default.min.css"
+	th:href="@{/css/owl.theme.default.min.css}" />
+</head>
+<body>
+	<!-- Header -->
+	<!-- Header -->
+	<header class="filmoja-header-area">
+		<nav class="navbar navbar-default" style="margin-bottom: 0px">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target="#myNavbar">
+						<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" th:href="@{/home}">CINEMA</a>
+				</div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav">
+						<li><a th:href="@{/home}">Trang Chủ</a></li>
+						<li><a th:href="@{/schedule}">Lịch Chiếu</a></li>
+						<li><a href="#" data-toggle="dropdown">Phim</a>
+							<ul class="dropdown-menu">
+								<li><a href="currentMovie">Phim Đang Chiếu</a></li>
+								<li><a href="upcomingMovie">Phim Sắp Chiếu</a></li>
+							</ul></li>
+						<li><a th:href="@{/billUser}">Lịch sử mua vé</a></li>
+					</ul>
+
+					<ul
+						style="display: flex; justify-content: center; align-items: center;"
+						class="nav navbar-nav navbar-right">
+						<li>
+							<!-- <a href="" data-toggle="modal" data-target="#signUpModal"
+                  ><span class="glyphicon glyphicon-user"></span> Sign Up</a
+                > --> <a sec:authorize="isAnonymous()"
+							th:href="@{/register}"><span class="glyphicon glyphicon-user"></span>
+								Sign Up</a>
+						</li>
+
+						<li><a sec:authorize="isAnonymous()" th:href="@{/login}"><span
+								class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+						<!-- <li><span th:text ="${#authentication.getPrincipal().getId()}"></span></li> -->
+						<li sec:authorize="isAuthenticated()"><span
+							class="glyphicon glyphicon-user" sec:authentication="name"></span>
+						</li>
+
+
+						<li><a sec:authorize="isAuthenticated()" th:href="@{/logout}"><span
+								class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<!-- Header -->
+
+	<!-- Movie Detail -->
+	<section class="filmoja-breadcrumb-area section_30 container"
+		style="background-color: #e6e7e9; max-width: 100% !important; border-top: 1px solid;">
+		<div class="container">
+			<div class="row" style="display: flex; flex-wrap: wrap">
+				<div class="col-md-12">
+					<div class="movie-details-banner">
+
+						<div class="row" style="display: flex; flex-wrap: wrap"
+							th:oject="${movieDetailObj}">
+							<div class="col-lg-3 col-sm-4">
+								<div class="details-banner-thumb">
+									<img th:src="@{${movieDetailObj.imageURl}}" />
+								</div>
+							</div>
+
+							<div class="col-lg-9 col-sm-8">
+								<div class="details-banner-info">
+									<h3 style="color: #22272b" th:text="${movieDetailObj.name}"></h3>
+									<p class="details-genre" style="color: #22272b"
+										th:text="*{categories}"></p>
+									<ul>
+										<li><b>Đạo diễn : </b><strong
+											th:text="${movieDetailObj.director}"></strong></li>
+										<li><b>Ngày chiếu : </b> <strong
+											th:text="${movieDetailObj.releaseDate}"></strong></li>
+										<li><b>Diễn viên : </b> <strong
+											th:text="${movieDetailObj.actors}"></strong></li>
+										<li><b>Thời lượng : </b><strong
+											th:text="${movieDetailObj.duration}"></strong></li>
+									</ul>
+								</div>
+								<div class="movie-details-page-box">
+									<div class="tv-panel-list">
+										<div class="tab-content">
+											<p th:text="${movieDetailObj.content}"></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Movie Detail -->
+
+	<!-- Lịch Chiếu -->
+	<section
+		class="filmoja-movie-details-page section_70 container bg-main"
+		style="background: #e6e7e9; max-width: 100% !important">
+		<div class="container" style="padding: 0">
+			<div class="row" style="display: flex; flex-wrap: wrap">
+				<div class="col-lg-12 offset-lg-12">
+					<div class="col-lg-12">
+						<h4 class="schedule-title">LỊCH CHIẾU</h4>
+					</div>
+					<div class="col-md-12 col-sm-12 collaps_theater"
+						style="height: auto; overflow: hidden; margin-bottom: 15px">
+						<div class="schedule-content"
+							th:each="sc : ${scheduleByMovieString}">
+							<div class="col-lg-2 col-md-3 col-sm-12">
+								<span class="time schedule-day" th:text="${sc}"></span>
+							</div>
+							<div class="col-lg-10 col-md-9 col-sm-12" style="display: flex;">
+								<div th:each="sch : ${scheduleByMovie1}" th:if="${sch.showDate.isEqual(sc)}">
+								<div th:if="${sch.showDate.isEqual(date)}">
+								<a
+										
+										style="display: inline-flex; margin-bottom: 3px"
+										th:unless="${sch.showTime.isAfter(time)}"
+										> 
+										<span class="time"
+										
+										th:text="${sch.showTime}" style="margin-left: 15px;opacity: .3;background-color: #2b2b31"></span>
+									</a>
+								<a
+										th:href="@{/bookingTicket?movieId={movieId}&roomId={roomId}&showDate={showDate}&showTime={showTime} (movieId=${sch.movies.id},roomId=${sch.rooms.id},showDate=${sch.showDate},showTime=${sch.showTime})}"
+										style="display: inline-flex; margin-bottom: 3px"
+										th:if="${sch.showTime.isAfter(time)}"
+										> 
+										<span class="time"
+										
+										th:text="${sch.showTime}" style="margin-left: 15px"></span>
+									</a>
+									
+								</div>
+								<div th:unless="${sch.showDate.isEqual(date)}">
+								<a
+										th:href="@{/bookingTicket?movieId={movieId}&roomId={roomId}&showDate={showDate}&showTime={showTime} (movieId=${sch.movies.id},roomId=${sch.rooms.id},showDate=${sch.showDate},showTime=${sch.showTime})}"
+										style="display: inline-flex; margin-bottom: 3px"
+										
+										> 
+										<span class="time"
+										th:text="${sch.showTime}" style="margin-left: 15px"></span>
+									</a>
+								</div>
+									
+									
+								</div>
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Lịch Chiếu -->
+
+	<!-- jQuery library -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>

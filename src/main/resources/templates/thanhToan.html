@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Thanh Toán</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" th:href="@{css/style.css}" />
+</head>
+<body>
+	<!-- Header -->
+	<header class="filmoja-header-area">
+		<nav class="navbar navbar-default" style="margin-bottom: 0px">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target="#myNavbar">
+						<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" th:href="@{/home}">CINEMA</a>
+				</div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav">
+						<li ><a  th:href="@{/home}">Trang Chủ</a></li>
+						<li><a th:href="@{/schedule}">Lịch Chiếu</a></li>
+						<li><a href="#" data-toggle="dropdown">Phim</a>
+							<ul class="dropdown-menu">
+								<li><a href="currentMovie">Phim Đang Chiếu</a></li>
+								<li><a href="upcomingMovie">Phim Sắp Chiếu</a></li>
+							</ul></li>
+						<li ><a th:href="@{/billUser}">Lịch sử mua
+								vé</a></li>
+					</ul>
+
+					<ul
+						style="display: flex; justify-content: center; align-items: center;"
+						class="nav navbar-nav navbar-right">
+						<li>
+							<!-- <a href="" data-toggle="modal" data-target="#signUpModal"
+                  ><span class="glyphicon glyphicon-user"></span> Sign Up</a
+                > --> <a sec:authorize="isAnonymous()"
+							th:href="@{/register}"><span class="glyphicon glyphicon-user"></span>
+								Sign Up</a>
+						</li>
+
+						<li><a sec:authorize="isAnonymous()" th:href="@{/login}"><span
+								class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+						<!-- <li><span th:text ="${#authentication.getPrincipal().getId()}"></span></li> -->
+						<li sec:authorize="isAuthenticated()"><span
+							class="glyphicon glyphicon-user" sec:authentication="name"></span>
+						</li>
+
+
+						<li><a sec:authorize="isAuthenticated()" th:href="@{/logout}"><span
+								class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<!-- Header -->
+
+	<!-- Tilte -->
+	<section class="filmoja-breadcrumb-area section_15 container"
+		style="background: #22272b; max-width: 100% !important; border-bottom: 0.1px solid #fff;">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="breadcrumb-box">
+						<h2>Bước 2: Xác Nhận Thông Tin</h2>
+						<div class="clockdiv">
+							<div>
+								<span style="color: #fff; font-size: 25px" id="countDown"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Tilte -->
+
+	<!-- Information -->
+	<div class="sign section--bg container">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="sign__content">
+						<div class="sign__form col-lg-12">
+							<div th:object="${result}" class="row col-lg-12"
+								style="float: left">
+								<h5 class="sign__form_title">THÔNG TIN NGƯỜI MUA</h5>
+								<div class="sign__group" style="font-size: 16px">
+									<p
+										th:text="${'Người nhận: '+result.firstName +' '+result.lastName}"></p>
+
+
+								</div>
+								<div class="sign__group" style="font-size: 16px">
+									<p th:text="${'Email: '+result.email}"></p>
+
+								</div>
+								<div class="sign__group" style="font-size: 16px">
+									<p th:text="${'Số điện thoại: '+ result.phone}"></p>
+								</div>
+								<h5 class="sign__form_title">THÔNG TIN VÉ</h5>
+								<div class="sign__group" style="font-size: 16px">
+									<p>Rạp: CINEMA ĐÀ NẴNG</p>
+									<p th:text="${'Tên phim: '+nameMovie}"></p>
+									<p th:text="${'Xuất Chiếu: '+showTime+' - '+#dates.format(showDate, 'dd/MM/yyyy')}">
+									</p>
+								</div>
+								<div class="sign__group" style="margin-top: 10px">
+									<p
+										style="text-transform: uppercase; font-weight: 700; color: #ffe53d;">
+										Số ghế: <a
+											style="text-transform: uppercase; font-weight: 700; color: #ffe53d;"
+											id="seatCount"> 1</a>
+									</p>
+								</div>
+								<div class="sign__group">
+									<div class="row" style="padding: 15px; display: flex"
+										id="seatSelect">
+
+										<div class="clear"></div>
+									</div>
+								</div>
+								<div class="sign__group" style="color: wheat;">
+									Tổng tiền ghế:
+									<p id="total-money"></p>
+								</div>
+
+							</div>
+
+							<div class="row col-lg-12">
+								<div class="col-lg-6">
+									<a th:onclick="removeStore()"
+										th:href="@{/billInsert?movieId={movieId}&roomId={roomId}&showDate={showDate}&showTime={showTime}&seatList={seatList} (movieId=${movieId},roomId=${roomId},showDate=${#dates.format(showDate , 'yyyy-MM-dd')},showTime=${showTime}, seatList=${seatList})}"
+										class="sign__btn" id="checkOutButton">XÁC NHẬN</a>
+								</div>
+								<div class="col-lg-6">
+									<a th:onclick="removeStore()"
+										th:href="@{/billCancel?seatList={seatList} (seatList=${seatList})}"
+										class="sign__btn">HỦY GIAO DỊCH</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Information -->
+
+	<!-- jQuery library -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		var listSeat = /*[[${seatList}]]*/ 'List Seat';
+		/*]]>*/
+      let cart = [];
+      let count = 0;
+      var seconds = 300;
+      let arayseat;
+      let countdown = document.getElementById('countDown');
+      const showCart = (cart) => {
+   		let cartBody = document.getElementById('seatSelect');
+   		cartBody.innerHTML = '';
+        cart.map(item => {
+        cartBody.innerHTML +=
+        `
+        <p style="border: 1px solid;
+                  padding: 6px;
+                  border-radius: 6px;
+                  text-align: center;
+                  margin: 2px;
+                  margin-right: 10px;">
+			<b style="color: red" >${item.name}</b>
+        </p>
+        `
+
+        }
+        
+        ) 
+        let cartPrice = document.getElementById('total-money');
+        const totalMoney = cart.reduce((a,b)=>{
+        return a + b.price;
+        },0);
+        cartPrice.innerHTML = '';
+        cartPrice.innerHTML +=` ${totalMoney} VNĐ`
+   		
+    }
+    const showCount = (size) => {
+    	let cartSize = document.getElementById('seatCount');
+    	cartSize.innerHTML = '';
+    	cartSize.innerHTML +=` ${size}`
+    }
+    
+    if(localStorage.getItem('cart'))
+    {
+    	let storage = JSON.parse(localStorage.getItem('cart'));
+    	var size = Object.keys(storage).length;
+    	const myTimeout2 = setTimeout(showCount(size), 1000);
+        const myTimeout = setTimeout(showCart(storage), 1000);
+        arayseat=Object.entries(storage);
+        console.log(arayseat);
+    }
+    setInterval(function () {
+    if(seconds >= 1)
+    {
+    	seconds-=1;
+    	countdown.innerHTML = seconds + "s";
+    }
+    else {
+    window.location.replace("/billCancel?seatList="+listSeat);
+    localStorage.removeItem("cart")
+    }
+    },1000);
+    const removeStore = () => {
+    localStorage.removeItem("cart")
+    }
+
+</script>
+</body>
+</html>

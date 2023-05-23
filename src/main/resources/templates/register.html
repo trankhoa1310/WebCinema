@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cinema</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" type="text/css"  href="/css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" th:href="@{/css/owl.carousel.min.css}" />
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css"  th:href="@{/css/owl.theme.default.min.css}"/>
+  </head>
+<body>
+<body>
+<header class="filmoja-header-area">
+        <nav class="navbar navbar-default" style="margin-bottom: 0px">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button
+                type="button"
+                class="navbar-toggle"
+                data-toggle="collapse"
+                data-target="#myNavbar"
+              >
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" th:href="@{/home}">CINEMA</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+              <ul class="nav navbar-nav">
+                <li class="active"><a th:href="@{/home}">Trang Chủ</a></li>
+                <li><a href="#">Lịch Chiếu</a></li>
+                <li>
+                  <a href="#" data-toggle="dropdown">Phim</a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Phim Đang Chiếu</a></li>
+                    <li><a href="#">Phim Sắp Chiếu</a></li>
+                  </ul>
+                </li>
+              </ul>
+            
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                  <a th:href="@{/register}"><span class="glyphicon glyphicon-user"></span> Sign Up</a
+                  >
+                </li>
+                <li>
+                  <a th:href="@{/login}"
+                    ><span class="glyphicon glyphicon-log-in"></span> Login</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+
+<section class="filmoja-login-area section_70 container bg-main"  style="background: #e6e7e9; max-width: 100% !important; border-top: 1px solid;padding-bottom: 500px">
+     	<div class="container" style="text-align: center;display: flex;justify-content: center;">
+    <div class="row" style="width: 50%">
+    
+        <div>
+            <h2>Đăng ký</h2>
+            <form th:action="@{/register}" method="post">
+            	<div class="form-group">
+                    <label for="firstName" style="width: 200px">Họ</label>
+                    <input required="required" type="text" name="firstName" id="firstName" placeholder="Họ" class="form-control form-control-lg">
+                </div>
+                <div class="form-group">
+                    <label for="lastName" style="width: 200px">Tên</label>
+                    <input required="required" type="text" name="lastName" id="lastName" placeholder="Tên" class="form-control form-control-lg">
+                </div>
+                <div class="form-group">
+                    <label for="email" style="width: 200px">Email</label>
+                    <input required="required" type="email" name="email" id="email" placeholder="Email" class="form-control form-control-lg">
+                </div>
+				<div class="form-group">
+                    <label for="phone" style="width: 200px">Số điện thoại</label>
+                    <input required="required" type="phone" name="phone" id="phone" placeholder="Số điện thoại" class="form-control form-control-lg">
+                </div>
+                <div class="form-group">
+                    <label for="password" style="width: 200px">Mật khẩu</label>
+                    <input required="required" type="password" class="form-control form-control-lg" placeholder="Mật khẩu" name="password" id="password">
+                </div>
+                <div class="form-group">
+                    <label for="password" style="width: 200px">Nhập lại mật khẩu</label>
+                    <input required="required" type="password" class="form-control form-control-lg" placeholder="Nhập lại Mật khẩu" name="passwordAgain" id="passwordAgain">
+                </div>
+                <div th:if="${param.error}" class="alert alert-error text-danger">
+                    Invalid username or password.
+                </div>
+
+                <input type="submit" value="Đăng ký" class="btn btn-primary btn-block">
+                <br>
+                <span >Nếu bạn đã có tài khoản? <a class="linkControl" href="./login.html"
+                                                th:href="@{/login}">Đăng nhập ở đây</a></span>
+            </form>
+        </div>
+
+    </div>
+</div>
+     </section>
+
+</body>
+</html>

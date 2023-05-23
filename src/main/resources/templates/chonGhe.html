@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cinema</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}" />
+<link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}" />
+</head>
+<body>
+	<!-- Header -->
+	<header class="filmoja-header-area">
+		<nav class="navbar navbar-default" style="margin-bottom: 0px">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target="#myNavbar">
+						<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" th:href="@{/home}">CINEMA</a>
+				</div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<div class="collapse navbar-collapse" id="myNavbar">
+						<ul class="nav navbar-nav">
+							<li ><a th:href="@{/home}">Trang Chủ</a></li>
+							<li><a th:href="@{/schedule}">Lịch Chiếu</a></li>
+							<li><a href="#" data-toggle="dropdown">Phim</a>
+								<ul class="dropdown-menu">
+									<li><a href="currentMovie">Phim Đang Chiếu</a></li>
+									<li><a href="upcomingMovie">Phim Sắp Chiếu</a></li>
+								</ul></li>
+							<li><a th:href="@{/billUser}">Lịch sử mua vé</a></li>
+						</ul>
+
+						<ul
+							style="display: flex; justify-content: center; align-items: center;"
+							class="nav navbar-nav navbar-right">
+							<li>
+								<!-- <a href="" data-toggle="modal" data-target="#signUpModal"
+                  ><span class="glyphicon glyphicon-user"></span> Sign Up</a
+                > --> <a sec:authorize="isAnonymous()"
+								th:href="@{/register}"><span
+									class="glyphicon glyphicon-user"></span> Sign Up</a>
+							</li>
+
+							<li><a sec:authorize="isAnonymous()" th:href="@{/login}"><span
+									class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+							<!-- <li><span th:text ="${#authentication.getPrincipal().getId()}"></span></li> -->
+							<li sec:authorize="isAuthenticated()"><span
+								class="glyphicon glyphicon-user" sec:authentication="name"></span>
+							</li>
+
+
+							<li><a sec:authorize="isAuthenticated()"
+								th:href="@{/logout}"><span
+									class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+						</ul>
+					</div>
+				</div>
+		</nav>
+	</header>
+	<!-- Header -->
+
+	<!-- Tilte -->
+	<section class="filmoja-breadcrumb-area section_15 container"
+		style="background: #22272b; max-width: 100% !important; border-bottom: 0.1px solid #fff;">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="breadcrumb-box">
+						<h2>Bước 1: Chọn Ghế</h2>
+						<h4 style="color: red; font-size: 20px;" th:if="${Fail}">
+							<strong th:text="${Fail}"></strong>
+						</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Tilte -->
+
+	<!-- Seat -->
+	<div class="feature-section container">
+		<div class="list-seat" style="margin-bottom: 100px">
+			<div class="screen-thumb">
+				<h4 class="screen">Màn Hình</h4>
+				<img th:src="@{/img/screen-thumb.png}" />
+			</div>
+			<div class="clearfix row" th:each="sr : ${seatRow} ">
+				<div th:each="s : ${seatAll}" th:switch="${s.status}">
+
+					<p class="seat-item" th:case="true" th:if="${s.rowSeat == sr}"
+						th:text="${s.categoryName}" th:data-id="${s.getId()}"
+						th:onclick="change([[${s.getId()}]],[[${s.categoryName}]],[[${s.price}]])"></p>
+					<p class="seat-item-selected" th:case="false"
+						th:if="${s.rowSeat == sr}" th:text="${s.categoryName}"></p>
+
+
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<!-- Seat -->
+	<div class="clear"></div>
+
+	<!-- Thành Tiền -->
+	<section class="categories-section container bg-main info-map">
+		<div class="container" style="display: flex">
+			<div class="col-lg-4">
+				<h5 class="categories-section-title">CHÚ THÍCH GHẾ</h5>
+				<div class="note-color">
+					<div class="note-col">
+						<p class="note-seat note-seat-normal"></p>
+						<p class="">Ghế thường</p>
+					</div>
+					<div class="note-col">
+						<p class="note-seat note-seat-selled"></p>
+						<p class="">Ghế đã bán</p>
+					</div>
+					<div class="note-col">
+						<p class="note-seat note-seat-selected"></p>
+						<p class="">Ghế đang chọn</p>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="col-lg-5 col-md-6 col-sm-12">
+				<div class="col-lg-12">
+					<h5 class="categories-section-title">GHẾ ĐÃ CHỌN</h5>
+					<div class="color-note">
+						<div class="note-col" id="seatSelect"
+							style="letter-spacing: 1px; font-size: 15px"></div>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="col-lg-12">
+					<h5 class="categories-section-title">GIÁ VÉ</h5>
+					<div class="note-color">
+						<div class="note-col">
+							<p class="total-money" id="total-money"
+								style="letter-spacing: 1px; font-size: 15px">0 VNĐ</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-3 col-md-6 col-sm-12"
+				style="align-items: center; display: flex">
+				<div class="note-color">
+					<div class="note-col" style="width: 100%">
+						<!-- <a th:href="@{/billInfor?movieId={movieId}&roomId={roomId}&showDate={showDate}&showTime={showTime} (movieId=${movieId},roomId=${roomId},showDate=${#dates.format(showDate , 'yyyy-MM-dd')},showTime=${showTime})}" class="next-btn btn btn-success" >Tiếp theo</a> -->
+						<a
+							th:onclick="goTo([[${movieId}]],[[${roomId}]],[[${showDate}]],[[${showTime}]])"
+							class="next-btn btn btn-success">Tiếp theo</a>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="clear"></div>
+	</section>
+	<!-- Thành Tiền -->
+
+	<!-- jQuery library -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script th:inline="javascript">
+    let cart = [];
+    let arayseat;
+    if(localStorage.getItem('cart'))
+    {
+    	localStorage.removeItem('cart');
+    }
+    
+    const change = async (id,name,price) => {
+        let seat = document.querySelector(`[data-id="${id}" ]`);
+        
+        if(seat.classList.contains("current_select"))
+        {
+        	
+        	seat.classList.remove("current_select");
+        	let storage = localStorage.getItem('cart');
+        	if(storage){
+        		cart = JSON.parse(storage);
+        	}
+        	cart = cart.filter(item => item.id != id);
+        	localStorage.setItem('cart',JSON.stringify(cart));
+        	showCart(cart);
+        	arayseat=Object.values(cart);
+        	
+       		console.log(arayseat);
+        }
+        else {
+        	let storage = localStorage.getItem('cart');
+        	if(storage){
+        		cart = JSON.parse(storage);
+        	}
+        	let product = await {
+        	id : id,
+        	name: name,
+        	price: price,
+        	};
+        	cart.push(product) ;
+        	localStorage.setItem('cart',JSON.stringify(cart));
+        	seat.classList.add("current_select");
+        	showCart(cart);
+        	arayseat=Object.values(cart);
+       		console.log(arayseat);
+        }
+    }
+    const showCart = (cart) => {
+   		let cartBody = document.getElementById('seatSelect');
+   		cartBody.innerHTML = '';
+        cart.map(item => {
+        cartBody.innerHTML +=` ${item.name} `
+        }) 
+        let cartPrice = document.getElementById('total-money');
+        const totalMoney = cart.reduce((a,b)=>{
+        return a + b.price;
+        },0);
+        cartPrice.innerHTML = '';
+        cartPrice.innerHTML +=` ${totalMoney} VNĐ`
+    }
+    const goTo = (movieId, roomId, showDate, showTime) =>{
+    let seats= [];
+    arayseat.forEach(e => seats.push(e.id));
+    
+    let url = "/billInfor?movieId=" + movieId + "&roomId=" + roomId + "&showDate=" + showDate + "&showTime=" + showTime + "&seatList=" + seats;
+      window.location.replace(url);
+    }
+    
+    
+
+</script>
+</body>
+</html>
